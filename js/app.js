@@ -1,8 +1,8 @@
 // js/app.js
 
-import { getTopics } from './data.js'; // Opravena cesta
-import { Topic, Level, Word } from './models.js';
-import { getCurrentUser } from './user.js';
+import { getTopics } from '../data/data.js'; // Opravena cesta
+import { Topic, Level, Word } from '../js/models.js';
+import { getCurrentUser } from '../js/user.js';
 
 // Globální proměnné
 let currentTopic = null;
