@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naše škola</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+
+</head>
+<body>
+  <div class="container">
+    <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
+    <div class="navigation-buttons">
+    </div>
+    <div class="testing-container">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div id="testing-word" class="testing-word"></div>
+      <input type="text" id="testing-input" class="testing-input" readonly>
+      <div class="letter-grid" id="letter-grid"></div>
+      <div class="testing-controls">
+        <button class="delete" onclick="onDeleteTapped()">Vymazat</button>
+        <button class="confirm" onclick="onConfirmTapped()">Potvrdit</button>
+        <button class="dont-know" onclick="onDontKnowTapped()">Nevím</button>
+      </div>
+      <div id="alert-container"></div>
+
+
+      <div id="testing-score" class="testing-score">Skóre: 0</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initTesting } from '/js/app.js';
+    window.goTo = function (path) {
+        window.location.href = window.location.origin + path;
+      }
+        initTesting();
+  </script>
+    <script src="js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!-- /learning.html -->
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naše škola</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
+
+    <!-- Progres bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="learning-progress-bar"></div>
+    </div>
+
+    <!-- Zobrazení aktuálního slova -->
+    <div class="learning-container">
+      <div id="learning-word" class="learning-word">Slovo zde</div>
+    </div>
+
+    <!-- Navigační tlačítka v Learning Mode -->
+    <div class="learning-controls">
+      <button id="learning-back-button" class="learning-control-button" onclick="onLearningBack()">Zpět</button>
+      <button id="learning-audio-button" class="learning-control-button">Audio</button> <!-- Přidáno nové tlačítko -->
+      <button id="learning-next-button" class="learning-control-button" onclick="onLearningNext()">Další</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { loadSettings, initializeSettingsModal, initLearning } from '/js/app.js';
+
+    // Inicializace nastavení, modal okna a Learning Mode
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSettings();
+      initLearning();
+
+      window.goTo = function (path) {
+        window.location.href = window.location.origin + path;
+      }
+
+      // Přidání event listeneru pro tlačítko "Audio"
+      const audioButton = document.getElementById('learning-audio-button');
+      if (audioButton) {
+        audioButton.addEventListener('click', window.playCurrentWordAudio);
+      }
+    });
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+
+</html>

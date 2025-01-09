@@ -1,0 +1,91 @@
+<!-- nav.html -->
+<nav class="navigation">
+    <ul>
+        <li>
+            <button onclick="goTo('/topic.html?mode=learning')">
+                <i class="fas fa-book"></i>
+                <span class="nav-label">Učení</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/topic.html?mode=testing')">
+                <i class="fas fa-clipboard-check"></i>
+                <span class="nav-label">Testování</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/profile.html')">
+                <i class="fas fa-user"></i>
+                <span class="nav-label">Profil</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/statistics.html')">
+                <i class="fas fa-chart-line"></i>
+                <span class="nav-label">Statistiky</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/setting.html')">
+                <i class="fas fa-cog"></i>
+                <span class="nav-label">Nastavení</span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<!-- Spodní Navigační Menu -->
+<nav class="navigation-bottom">
+    <ul>
+        <li>
+            <button onclick="goTo('/topic.html?mode=learning')">
+                <i class="fas fa-book"></i>
+                <span class="nav-label">Učení</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/topic.html?mode=testing')">
+                <i class="fas fa-clipboard-check"></i>
+                <span class="nav-label">Testování</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/profile.html')">
+                <i class="fas fa-user"></i>
+                <span class="nav-label">Profil</span>
+            </button>
+        </li>
+        <li>
+            <button onclick="goTo('/statistics.html')">
+                <i class="fas fa-chart-line"></i>
+                <span class="nav-label">Statistiky</span>
+            </button>
+        </li>
+        <li>
+            <button id="settings-button-bottom">
+                <i class="fas fa-cog"></i>
+                <span class="nav-label">Nastavení</span>
+            </button>
+        </li>
+    </ul>
+</nav>
+<script type="module">
+
+    // Funkce pro načtení navigace
+    async function loadNavigation() {
+        try {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const navContent = await response.text();
+            document.getElementById('nav-placeholder').innerHTML = navContent;
+
+            // Po načtení navigace inicializujte potřebné funkce
+            initializeSettingsModal();
+        } catch (error) {
+            console.error('Chyba při načítání navigace:', error);
+        }
+    }
+
+</script>
+<script src="js/nav.js"></script>

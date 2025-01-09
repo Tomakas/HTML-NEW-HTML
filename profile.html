@@ -1,0 +1,29 @@
+<!-- /index.html -->
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naše škola</title>
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
+
+    <script type="module">
+      import { loadSettings, initializeSettingsModal } from './js/app.js';
+
+      // Připojte funkce k objektu window, aby byly globálně dostupné
+      window.goTo = function (path) {
+        window.location.href = window.location.origin + path;
+      }
+    </script>
+    <script src="js/nav.js"></script>
+
+</body>
+
+</html>

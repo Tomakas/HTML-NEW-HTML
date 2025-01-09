@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naše škola</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div id="nav-placeholder"></div> 
+    <ul id="level-list" class="levels-list"></ul>
+   </div>
+
+   <script type="module">
+    import { loadLevels } from '/js/app.js';
+    window.goTo = function(path) {
+      window.location.href = window.location.origin + path;
+    }
+
+    loadLevels();
+  </script>
+    <script src="js/nav.js"></script>
+</body>
+</html>
