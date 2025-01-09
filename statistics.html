@@ -1,11 +1,11 @@
-<!-- /index.html -->
+<!-- /statistics.html -->
 <!DOCTYPE html>
 <html lang="cs">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Naše škola</title>
+  <title>Statistiky Profilů - Naše škola</title>
   <link rel="stylesheet" href="fontawesome/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -14,16 +14,64 @@
   <div class="container">
     <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
 
-    <script type="module">
-      import { loadSettings, initializeSettingsModal } from './js/app.js';
+    <h1>Statistiky Profilů</h1>
+    <div id="statistics-container">
+      <!-- Dynamicky generované statistiky -->
+    </div>
+  </div>
 
-      // Připojte funkce k objektu window, aby byly globálně dostupné
-      window.goTo = function (path) {
-        window.location.href = window.location.origin + path;
+  <!-- Modal pro zobrazení detailních statistik (volitelné) -->
+  <div id="detail-statistics-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Detailní Statistiky</h2>
+      <div id="detail-statistics-content">
+        <!-- Detailní statistiky budou zde -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { loadSettings, initializeSettingsModal } from 'js/app.js';
+
+    // Připojte funkce k objektu window, aby byly globálně dostupné
+    window.goTo = function (path) {
+      window.location.href = window.location.origin + path;
+    }
+  </script>
+
+  <script type="module">
+    import { loadProfiles } from './js/profiles.js';
+    import { getCurrentProfile } from './js/profiles.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const statisticsContainer = document.getElementById('statistics-container');
+      const profiles = loadProfiles();
+
+      if (profiles.length === 0) {
+        statisticsContainer.innerHTML = '<p>Žádné profily nebyly vytvořeny.</p>';
+        return;
       }
-    </script>
-    <script src="js/nav.js"></script>
 
+      profiles.forEach(profile => {
+        const profileDiv = document.createElement('div');
+        profileDiv.classList.add('profile-statistics');
+
+        profileDiv.innerHTML = `
+          <h3>${profile.username}</h3>
+          <ul>
+            <li>Celkový počet zobrazených slov v režimu učení: ${profile.statistics.totalLearningWordsDisplayed}</li>
+            <li>Správné odpovědi: ${profile.statistics.correctAnswers}</li>
+            <li>Špatné odpovědi: ${profile.statistics.incorrectAnswers}</li>
+            <li>Žádné odpovědi: ${profile.statistics.noAnswers}</li>
+          </ul>
+        `;
+
+        statisticsContainer.appendChild(profileDiv);
+      });
+    });
+  </script>
+  <script src="js/nav.js"></script>
 </body>
 
 </html>

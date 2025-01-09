@@ -15,11 +15,11 @@
     <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
     <div class="setting-item">
         <label for="sound-toggle">Zvuk:</label>
-        <input type="checkbox" id="sound-toggle" checked> 
+        <input type="checkbox" id="audio-toggle" checked> 
       </div>
       
     <script type="module">
-      import { loadSettings, initializeSettingsModal } from './js/app.js';
+      import { loadSettings, initializeSettingsModal } from '../js/app.js';
 
       // Připojte funkce k objektu window, aby byly globálně dostupné
       window.goTo = function (path) {
@@ -27,6 +27,25 @@
       }
     </script>
     <script src="js/nav.js"></script>
+
+
+    <script type="module">
+      import { toggleAudio, loadSettings } from 'js/app.js';
+    
+      document.addEventListener('DOMContentLoaded', () => {
+        const audioToggle = document.getElementById('audio-toggle');
+    
+        // Načtení aktuálního nastavení
+        loadSettings();
+        audioToggle.checked = localStorage.getItem('audioEnabled') === 'true';
+    
+        // Přidání event listeneru pro změnu nastavení
+        audioToggle.addEventListener('change', (e) => {
+          toggleAudio(e.target.checked);
+        });
+      });
+    </script>
+    
 
 </body>
 

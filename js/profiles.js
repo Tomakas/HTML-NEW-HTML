@@ -7,7 +7,7 @@ class Profile {
     constructor(username) {
         this.username = username;
         this.statistics = {
-            totalWordsDisplayed: 0,
+            totalLearningWordsDisplayed: 0, // Nová statistika pro Learning Mode
             correctAnswers: 0,
             incorrectAnswers: 0,
             noAnswers: 0

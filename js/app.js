@@ -238,21 +238,21 @@ export function initLearning() {
  * Aktualizuje zobrazení aktuálního slova v Learning Mode
  */
 function updateLearningDisplay() {
-    const learningWordElement = document.getElementById('learning-word');
-    if (learningWordElement && learningWords[learningCurrentIndex]) {
-        const word = learningWords[learningCurrentIndex];
-        currentWord = word; // Nastavení currentWord na aktuální slovo
+  const learningWordElement = document.getElementById('learning-word');
+  if (learningWordElement && learningWords[learningCurrentIndex]) {
+      const word = learningWords[learningCurrentIndex];
+      currentWord = word; // Nastavení currentWord na aktuální slovo
 
-        console.log('Displaying word:', currentWord); // Pro diagnostiku
+      console.log('Displaying word:', currentWord); // Pro diagnostiku
 
-        learningWordElement.innerHTML = `
-          <span class="english-word">${word.english}</span> - 
-          <span class="czech-word">${word.czech}</span> (<span class="phonetic">${word.phonetic}</span>)
-        `;
+      learningWordElement.innerHTML = `
+        <span class="english-word">${word.english}</span> - 
+        <span class="czech-word">${word.czech}</span> (<span class="phonetic">${word.phonetic}</span>)
+      `;
 
-        // Aktualizace statistik: totalWordsDisplayed
-        updateProfileStatistics('totalWordsDisplayed');
-    }
+      // Aktualizace statistik: totalLearningWordsDisplayed
+      updateProfileStatistics('totalLearningWordsDisplayed');
+  }
 }
 
 /**
@@ -347,9 +347,6 @@ function loadNewWord() {
     userInput = '';
     generateLetterOptions();
     updateDisplay();
-
-    // Aktualizace statistik: totalWordsDisplayed
-    updateProfileStatistics('totalWordsDisplayed');
 }
 
 /**
@@ -427,6 +424,7 @@ export function onDontKnowTapped() {
  * @param {boolean} isCorrect - Indikátor, zda je odpověď správná
  */
 function handleAnswer(isCorrect) {
+  function handleAnswer(isCorrect) {
     if (currentMode === 'testing') {
         if (isCorrect) {
             updateProfileStatistics('correctAnswers');
@@ -436,7 +434,7 @@ function handleAnswer(isCorrect) {
             updateProfileStatistics('incorrectAnswers');
         }
     }
-
+ }
     if (isCorrect) {
         score++;
         updateScoreDisplay();
