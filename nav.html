@@ -69,23 +69,22 @@
         </li>
     </ul>
 </nav>
+
+<!-- Skript pro zobrazení aktuálního profilu -->
 <script type="module">
+    import { getCurrentProfile } from './js/profiles.js';
 
-    // Funkce pro načtení navigace
-    async function loadNavigation() {
-        try {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const navContent = await response.text();
-            document.getElementById('nav-placeholder').innerHTML = navContent;
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentUserElement = document.createElement('div');
+        currentUserElement.classList.add('current-user');
 
-            // Po načtení navigace inicializujte potřebné funkce
-            initializeSettingsModal();
-        } catch (error) {
-            console.error('Chyba při načítání navigace:', error);
+        const currentProfile = getCurrentProfile();
+        if (currentProfile) {
+            currentUserElement.textContent = `Aktuální profil: ${currentProfile.username}`;
+        } else {
+            currentUserElement.textContent = 'Žádný aktivní profil';
         }
-    }
 
+        document.body.appendChild(currentUserElement);
+    });
 </script>
-<script src="js/nav.js"></script>

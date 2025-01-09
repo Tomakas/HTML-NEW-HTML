@@ -1,29 +1,181 @@
-<!-- /index.html -->
+<!-- /profile.html -->
 <!DOCTYPE html>
 <html lang="cs">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Naše škola</title>
-  <link rel="stylesheet" href="fontawesome/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profily - Naše škola</title>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <div class="container">
-    <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
+    <div class="container">
+        <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
+
+        <h1>Správa Profilů</h1>
+
+        <!-- Sekce pro vytvoření nového profilu -->
+        <div class="create-profile">
+            <h2>Vytvořit nový profil</h2>
+            <form id="create-profile-form">
+                <input type="text" id="new-profile-username" placeholder="Zadejte jméno profilu" required>
+                <button type="submit">Vytvořit</button>
+            </form>
+            <div id="create-profile-message"></div>
+        </div>
+
+        <!-- Sekce pro seznam existujících profilů -->
+        <div class="profile-list">
+            <h2>Existující profily</h2>
+            <ul id="profiles-ul">
+                <!-- Dynamicky generované profily -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal pro potvrzení smazání profilu -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Potvrzení</h2>
+            <p>Opravdu chcete smazat tento profil?</p>
+            <button id="confirm-delete-button">Ano</button>
+            <button id="cancel-delete-button">Ne</button>
+        </div>
+    </div>
 
     <script type="module">
-      import { loadSettings, initializeSettingsModal } from './js/app.js';
+        import { loadProfiles, createProfile, setCurrentProfile, getCurrentProfile, deleteProfile } from './js/profiles.js';
 
-      // Připojte funkce k objektu window, aby byly globálně dostupné
-      window.goTo = function (path) {
-        window.location.href = window.location.origin + path;
-      }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Funkce pro načtení a zobrazení profilů
+            function displayProfiles() {
+                const profilesUl = document.getElementById('profiles-ul');
+                profilesUl.innerHTML = ''; // Vyprázdnění seznamu
+
+                const profiles = loadProfiles();
+                const currentProfile = getCurrentProfile();
+
+                profiles.forEach(profile => {
+                    const li = document.createElement('li');
+                    li.classList.add('profile-item');
+
+                    const profileName = document.createElement('span');
+                    profileName.textContent = profile.username;
+                    profileName.classList.add('profile-name');
+
+                    const buttonsDiv = document.createElement('div');
+                    buttonsDiv.classList.add('profile-buttons');
+
+                    // Tlačítko pro přepnutí profilu
+                    const switchButton = document.createElement('button');
+                    switchButton.textContent = currentProfile && currentProfile.username === profile.username ? 'Aktuální' : 'Přepnout';
+                    switchButton.disabled = currentProfile && currentProfile.username === profile.username;
+                    switchButton.addEventListener('click', () => {
+                        setCurrentProfile(profile.username);
+                        displayProfiles();
+                        alert(`Přepnuto na profil: ${profile.username}`);
+                    });
+
+                    // Tlačítko pro smazání profilu
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Smazat';
+                    deleteButton.classList.add('delete-button');
+                    deleteButton.addEventListener('click', () => {
+                        openDeleteModal(profile.username);
+                    });
+
+                    buttonsDiv.appendChild(switchButton);
+                    buttonsDiv.appendChild(deleteButton);
+
+                    li.appendChild(profileName);
+                    li.appendChild(buttonsDiv);
+
+                    profilesUl.appendChild(li);
+                });
+
+                if (profiles.length === 0) {
+                    profilesUl.innerHTML = '<li>Žádné profily nebyly vytvořeny.</li>';
+                }
+            }
+
+            // Funkce pro vytvoření nového profilu
+            const createProfileForm = document.getElementById('create-profile-form');
+            const createProfileMessage = document.getElementById('create-profile-message');
+
+            createProfileForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const usernameInput = document.getElementById('new-profile-username');
+                const username = usernameInput.value.trim();
+
+                if (username === '') {
+                    createProfileMessage.textContent = 'Jméno profilu nemůže být prázdné.';
+                    createProfileMessage.style.color = 'red';
+                    return;
+                }
+
+                const newProfile = createProfile(username);
+                if (newProfile) {
+                    createProfileMessage.textContent = `Profil "${username}" byl úspěšně vytvořen.`;
+                    createProfileMessage.style.color = 'green';
+                    usernameInput.value = '';
+
+                    // Automatické přepnutí na nový profil
+                    setCurrentProfile(newProfile.username);
+                    displayProfiles();
+                } else {
+                    createProfileMessage.textContent = `Profil s jménem "${username}" již existuje.`;
+                    createProfileMessage.style.color = 'red';
+                }
+            });
+
+            // Funkce pro otevírání modal okna pro smazání profilu
+            const deleteModal = document.getElementById('delete-modal');
+            const closeDeleteModalButton = deleteModal.querySelector('.close-button');
+            const confirmDeleteButton = document.getElementById('confirm-delete-button');
+            const cancelDeleteButton = document.getElementById('cancel-delete-button');
+            let profileToDelete = null;
+
+            function openDeleteModal(username) {
+                profileToDelete = username;
+                deleteModal.style.display = 'block';
+            }
+
+            function closeDeleteModal() {
+                profileToDelete = null;
+                deleteModal.style.display = 'none';
+            }
+
+            closeDeleteModalButton.addEventListener('click', closeDeleteModal);
+            cancelDeleteButton.addEventListener('click', closeDeleteModal);
+
+            confirmDeleteButton.addEventListener('click', () => {
+                if (profileToDelete) {
+                    const success = deleteProfile(profileToDelete);
+                    if (success) {
+                        alert(`Profil "${profileToDelete}" byl úspěšně smazán.`);
+                        displayProfiles();
+                    } else {
+                        alert(`Chyba při mazání profilu "${profileToDelete}".`);
+                    }
+                    closeDeleteModal();
+                }
+            });
+
+            // Zavření modalu při kliknutí mimo obsah
+            window.addEventListener('click', (event) => {
+                if (event.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+
+            // Inicializace zobrazení profilů
+            displayProfiles();
+        });
     </script>
     <script src="js/nav.js"></script>
-
 </body>
 
 </html>
