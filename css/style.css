@@ -62,9 +62,10 @@ body {
 
 .topic-item {
   display: flex;
+  padding: 5px;
   flex-direction: column;
   align-items: center;
-  width: 150px; /* Nastavte šířku podle potřeby */
+  width: 180px; /* Nastavte šířku podle potřeby */
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -81,7 +82,7 @@ body {
 }
 
 .topic-name {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
@@ -460,10 +461,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #f8f9fa;
-    border-left: 1px solid #dee2e6;
-    padding: 20px 10px;
-    border-radius: 8px 0 0 8px;
+    background-color: #292929;
     width: 200px;
     height: 100%; /* Nastavení výšky na 100% viewport height */
   }
@@ -477,21 +475,28 @@ body {
 }
 
 .navigation li {
-  margin: 30px 0;
+  margin: 0px 0;
+  padding: 0px;
+}
+
+.navigation li:hoover {
+  background-color: #721c24;
 }
 
 .navigation button {
   background: none;
+  width: 100%;
+  padding: 20px 20px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   font-size: 24px;
-  color: #343a40;
+  color: #c7c7c7;
 }
 
 .navigation button:hover {
-  color: #007bff;
+  background-color: #555555;
 }
 
 .navigation i {
@@ -499,88 +504,85 @@ body {
   font-size: 36px;
 }
 
-/* Styl pro aktuálně přihlášeného uživatele */
-.current-user {
-  position: fixed;
-  top: 10px;
-  right: 120px; /* Přizpůsobte podle šířky navigace */
-  font-size: 14px;
-  color: #6c757d;
-}
-
 .navigation-bottom {
   display: none;
 }
 
 /* Responzivní styly */
+/* Media query pro obrazovky menší než 1000px */
 @media (max-width: 1000px) {
-  /* Vertikální navigace na levé straně se skryje */
+
+  body {
+    padding-left: 0; /* Odstraní odsazení pro menší obrazovky */
+    padding-bottom: 60px; /* Přidá odsazení na spodní část, aby se obsah nepřekrýval se spodní navigací */
+  }
+
   .navigation {
     display: none;
   }
 
-  body {
-    padding-left: 0; 
-  }
-
-  /* Spodní horizontální navigace */
   .navigation-bottom {
-    position: fixed;
+    display: block;
+    position: fixed; /* Fixace navigace na spodní část okna */
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    background-color: #292929; /* Barva pozadí */
+    border-top: 1px solid #dee2e6; /* Horní okraj pro oddělení od obsahu */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Jemný stín pro lepší vizuální oddělení */
+    z-index: 1000; /* Zajišťuje, že navigace je nad ostatním obsahem */
   }
-  
+
+  /* Styly pro seznam v spodní navigaci */
   .navigation-bottom ul {
-    list-style-type: none;
     display: flex;
+    justify-content: space-around; /* Rovnoměrné rozprostření tlačítek */
+    align-items: center;
     width: 100%;
-    align-items: center;
-    justify-content: center; /* Přidáno pro horizontální centrování */
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
-  
-  .navigation-bottom li {
-    flex: 1;
+
+  /* Styly pro jednotlivé položky seznamu */
+  .navigation-bottom ul li {
+    flex: 1; /* Každá položka zabírá stejnou šířku */
     text-align: center;
-    align-items: center;
   }
-  
-  .navigation-bottom button {
-    background: none;
-    border: none;
-    cursor: pointer;
+
+  /* Styly pro tlačítka ve spodní navigaci */
+  .navigation-bottom ul li button {
+    width: 100%; /* Tlačítka zabírají celou šířku svého kontejneru */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Ikona a text jsou vertikálně zarovnány */
     align-items: center;
-    font-size: 14px; 
-    color: #343a40;
-  }
-  
-  .navigation-bottom button:hover {
-    color: #007bff;
-  }
-  
-  .navigation-bottom i {
-    font-size: 24px;
+    padding: 15px 0; /* Zvýšené vertikální odsazení pro větší tlačítka */
+    font-size: 18px; /* Zvýšená velikost písma pro lepší čitelnost */
+    color: #343a40; /* Barva textu */
+    border: none; /* Odstranění orámování */
+    outline: none; /* Odstranění outline */
+    box-shadow: none; /* Odstranění stínu */
+    transition: background-color 0.3s ease; /* Plynulý přechod při hover */
+    background: none; /* Odstranění výchozího pozadí tlačítka */
   }
 
-  /* Zobrazení aktuálně přihlášeného uživatele ve spodním menu */
-  .current-user {
-    position: fixed;
-    bottom: 60px; /* Přizpůsobte podle výšky spodního menu */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #6c757d;
+  .navigation-bottom ul li button i {
+    font-size: 28px; /* Zvýšená velikost ikon */
+    margin-bottom: 5px; /* Odsazení mezi ikonou a textem */
+    color: #c7c7c7;
   }
 
+  .navigation-bottom ul li button .nav-label {
+    display: block; 
+    color: #c7c7c7;
 
+  }
+
+  /* Přidání efektu hover na tlačítka */
+  .navigation-bottom ul li button:hover {
+    background-color: #555555; /* Světle šedé pozadí při hover */
+  }
 }
+
 
   
