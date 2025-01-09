@@ -4,10 +4,15 @@
  * Třída reprezentující profil uživatele.
  */
 class Profile {
-    constructor(username, avatar = 'fa-user-circle') {
+    constructor(username) {
         this.username = username;
-        this.avatar = avatar;
-        this.statistics = {}; // Můžete přidat další atributy podle potřeby
+        this.statistics = {
+            totalWordsDisplayed: 0,
+            correctAnswers: 0,
+            incorrectAnswers: 0,
+            noAnswers: 0
+        };
+        // Můžete přidat další atributy podle potřeby
     }
 }
 
@@ -24,17 +29,16 @@ export function loadProfiles() {
  * Uloží všechny profily do localStorage.
  * @param {Array} profiles - Pole objektů profilů.
  */
-function saveProfiles(profiles) {
+export function saveProfiles(profiles) {
     localStorage.setItem('profiles', JSON.stringify(profiles));
 }
 
 /**
  * Vytvoří nový profil a uloží jej.
  * @param {string} username - Jméno nového profilu.
- * @param {string} avatar - Třída FontAwesome ikony pro avatar.
  * @returns {Profile|null} Nový profil nebo null, pokud už existuje.
  */
-export function createProfile(username, avatar = 'fa-user-circle') {
+export function createProfile(username) {
     const profiles = loadProfiles();
 
     // Kontrola, zda již profil s daným jménem existuje
@@ -42,7 +46,7 @@ export function createProfile(username, avatar = 'fa-user-circle') {
         return null; // Profil již existuje
     }
 
-    const newProfile = new Profile(username, avatar);
+    const newProfile = new Profile(username);
     profiles.push(newProfile);
     saveProfiles(profiles);
     return newProfile;

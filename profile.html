@@ -6,8 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profily - Naše škola</title>
+    <!-- FontAwesome pro generickou ikonu uživatele -->
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <!-- Váš vlastní CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Dodatečné styly pro profile.html -->
     <style>
         /* Dodatečné styly pro profile.html */
 
@@ -23,7 +26,7 @@
             align-items: center;
             gap: 5px;
             transition: background-color 0.3s ease;
-            margin-bottom: 20px;
+            margin: 0 auto 20px auto; /* Zarovnání na střed */
         }
 
         .create-profile-button:hover {
@@ -33,6 +36,7 @@
         .current-profile {
             display: flex;
             align-items: center;
+            justify-content: center; /* Horizontální zarovnání na střed */
             background-color: #f8f9fa;
             padding: 15px 20px;
             border-radius: 8px;
@@ -46,26 +50,30 @@
             margin-right: 15px;
         }
 
-        .current-profile .profile-info {
+        .profile-info {
             display: flex;
             flex-direction: column;
+            align-items: center; /* Zarovnání obsahu na střed */
         }
 
-        .current-profile .profile-info span {
+        .profile-info span {
             font-size: 24px;
             font-weight: bold;
             color: #343a40;
+            text-align: center; /* Zarovnání textu na střed */
         }
 
-        .create-profile, .profile-list {
+        .create-profile,
+        .profile-list {
             background-color: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .create-profile h2, .profile-list h2 {
+        .create-profile h2,
+        .profile-list h2 {
             margin-bottom: 15px;
             color: #343a40;
         }
@@ -83,26 +91,7 @@
             font-size: 16px;
         }
 
-        .avatar-selection {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .avatar-selection .avatar-option {
-            font-size: 40px;
-            color: #6c757d;
-            cursor: pointer;
-            padding: 10px;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            transition: color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .avatar-selection .avatar-option.selected {
-            color: #28a745;
-            border-color: #28a745;
-        }
+        /* Odstranění stylů pro avatar-selection */
 
         #create-profile-form button {
             background-color: #28a745;
@@ -139,6 +128,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
+        /* Generická ikona uživatele */
         .profile-item .avatar {
             font-size: 40px;
             color: #6c757d;
@@ -253,18 +243,11 @@
             background-color: #c82333;
         }
 
-        /* Styl pro avatary v seznamu profilů */
-        .profile-item .avatar {
-            font-size: 40px;
-            color: #6c757d;
-            margin-right: 15px;
-        }
-
         /* Responsivní úpravy */
         @media (max-width: 600px) {
             .current-profile {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center; /* Zajištění, že se obsah zarovná na střed */
                 gap: 10px;
             }
 
@@ -281,8 +264,9 @@
                 gap: 10px;
             }
 
-            .avatar-selection .avatar-option {
-                font-size: 30px;
+            .create-profile-button {
+                width: 100%; /* Na menších obrazovkách může být tlačítko širší */
+                justify-content: center; /* Zarovnání obsahu tlačítka na střed */
             }
         }
     </style>
@@ -292,7 +276,7 @@
     <div class="container">
         <div id="nav-placeholder"></div> <!-- Placeholder pro navigaci -->
 
-        <h1>Profily</h1>
+        <h1>Správa Profilů</h1>
 
         <!-- Sekce pro aktuální profil -->
         <div class="current-profile">
@@ -323,14 +307,7 @@
             <h2>Vytvořit nový profil</h2>
             <form id="create-profile-form">
                 <input type="text" id="new-profile-username" placeholder="Zadejte jméno profilu" required>
-                <div class="avatar-selection" id="avatar-selection">
-                    <!-- Výběr ikon FontAwesome jako avatary -->
-                    <i class="fas fa-user-circle avatar-option" data-avatar="fa-user-circle"></i>
-                    <i class="fas fa-user-tie avatar-option" data-avatar="fa-user-tie"></i>
-                    <i class="fas fa-user-secret avatar-option" data-avatar="fa-user-secret"></i>
-                    <i class="fas fa-user-md avatar-option" data-avatar="fa-user-md"></i>
-                    <i class="fas fa-user-shield avatar-option" data-avatar="fa-user-shield"></i>
-                </div>
+                <!-- Odstraněna sekce avatar-selection -->
                 <div class="modal-buttons">
                     <button type="button" class="cancel-button"><i class="fas fa-times"></i> Zrušit</button>
                     <button type="submit" class="confirm-button"><i class="fas fa-check"></i> Vytvořit</button>
@@ -364,11 +341,13 @@
                 const currentProfile = getCurrentProfile();
 
                 profiles.forEach(profile => {
+                    console.log(`Profile: ${profile.username}`); // Debugovací výpis
+
                     const li = document.createElement('li');
                     li.classList.add('profile-item');
 
                     const avatarIcon = document.createElement('i');
-                    avatarIcon.classList.add('fas', profile.avatar || 'fa-user-circle', 'avatar');
+                    avatarIcon.classList.add('fas', 'fa-user-circle', 'avatar');
 
                     const profileName = document.createElement('span');
                     profileName.textContent = profile.username;
@@ -421,8 +400,7 @@
 
                 if (activeProfile) {
                     activeProfileName.textContent = activeProfile.username;
-                    activeProfileAvatar.className = ''; // Reset třídy
-                    activeProfileAvatar.classList.add('fas', activeProfile.avatar || 'fa-user-circle');
+                    activeProfileAvatar.className = 'fas fa-user-circle'; // Pouze generická ikona
                 } else {
                     activeProfileName.textContent = 'Žádný aktivní profil';
                     activeProfileAvatar.className = 'fas fa-user-circle';
@@ -432,20 +410,6 @@
             // Funkce pro vytvoření nového profilu
             const createProfileForm = document.getElementById('create-profile-form');
             const createProfileMessage = document.getElementById('create-profile-message');
-            let selectedAvatar = 'fa-user-circle';
-
-            // Přidání výběru avataru
-            const avatarSelection = document.getElementById('avatar-selection');
-            avatarSelection.addEventListener('click', (e) => {
-                if (e.target.classList.contains('avatar-option')) {
-                    // Odstranění třídy 'selected' ze všech avatarů
-                    document.querySelectorAll('#avatar-selection .avatar-option').forEach(icon => icon.classList.remove('selected'));
-                    // Přidání třídy 'selected' na kliknutý avatar
-                    e.target.classList.add('selected');
-                    // Nastavení vybraného avataru
-                    selectedAvatar = e.target.getAttribute('data-avatar');
-                }
-            });
 
             createProfileForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -458,13 +422,14 @@
                     return;
                 }
 
-                const newProfile = createProfile(username, selectedAvatar);
+                console.log(`Creating profile: ${username}`); // Debugovací výpis
+
+                const newProfile = createProfile(username);
                 if (newProfile) {
+                    console.log(`Profile created: ${newProfile.username}`); // Debugovací výpis
                     createProfileMessage.textContent = `Profil "${username}" byl úspěšně vytvořen.`;
                     createProfileMessage.style.color = 'green';
                     usernameInput.value = '';
-                    selectedAvatar = 'fa-user-circle';
-                    document.querySelectorAll('#avatar-selection .avatar-option').forEach(icon => icon.classList.remove('selected'));
 
                     // Automatické přepnutí na nový profil
                     setCurrentProfile(newProfile.username);
@@ -495,8 +460,6 @@
             function closeCreateProfileModal() {
                 createProfileModal.style.display = 'none';
                 createProfileMessage.textContent = '';
-                selectedAvatar = 'fa-user-circle';
-                document.querySelectorAll('#avatar-selection .avatar-option').forEach(icon => icon.classList.remove('selected'));
             }
 
             openCreateProfileModalButton.addEventListener('click', openCreateProfileModal);
@@ -531,11 +494,13 @@
             }
 
             closeDeleteModalButton.addEventListener('click', closeDeleteModal);
-            cancelDeleteModalButton.addEventListener('click', closeDeleteModal);
+            cancelDeleteButton.addEventListener('click', closeDeleteModal);
 
             confirmDeleteButton.addEventListener('click', () => {
                 if (profileToDelete) {
+                    console.log(`Deleting profile: ${profileToDelete}`); // Debugovací výpis
                     const success = deleteProfile(profileToDelete);
+                    console.log(`Delete success: ${success}`); // Debugovací výpis
                     if (success) {
                         alert(`Profil "${profileToDelete}" byl úspěšně smazán.`);
                         displayProfiles();
@@ -544,6 +509,8 @@
                         alert(`Chyba při mazání profilu "${profileToDelete}".`);
                     }
                     closeDeleteModal();
+                } else {
+                    console.log('No profile to delete.');
                 }
             });
 
