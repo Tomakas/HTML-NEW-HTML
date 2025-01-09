@@ -19,7 +19,7 @@
       </div>
       
     <script type="module">
-      import { loadSettings, initializeSettingsModal } from 'js/app.js';
+      import { loadSettings, initializeSettingsModal } from './js/app.js';
 
       // Připojte funkce k objektu window, aby byly globálně dostupné
       window.goTo = function (path) {
@@ -30,7 +30,7 @@
 
 
     <script type="module">
-      import { toggleAudio, loadSettings } from 'js/app.js';
+      import { toggleAudio, loadSettings } from './js/app.js';
     
       document.addEventListener('DOMContentLoaded', () => {
         const audioToggle = document.getElementById('audio-toggle');

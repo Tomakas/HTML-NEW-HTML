@@ -32,7 +32,7 @@
   </div>
 
   <script type="module">
-    import { loadSettings, initializeSettingsModal } from 'js/app.js';
+    import { loadSettings, initializeSettingsModal } from './js/app.js';
 
     // Připojte funkce k objektu window, aby byly globálně dostupné
     window.goTo = function (path) {
@@ -41,8 +41,8 @@
   </script>
 
   <script type="module">
-    import { loadProfiles } from 'js/profiles.js';
-    import { getCurrentProfile } from 'js/profiles.js';
+    import { loadProfiles } from './js/profiles.js';
+    import { getCurrentProfile } from './js/profiles.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       const statisticsContainer = document.getElementById('statistics-container');
@@ -71,7 +71,7 @@
       });
     });
   </script>
-  <script src="js/nav.js"></script>
+  <script src="./js/nav.js"></script>
 </body>
 
 </html>
