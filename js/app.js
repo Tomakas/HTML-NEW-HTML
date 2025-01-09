@@ -1,6 +1,6 @@
 // js/app.js
 
-import { getTopics } from '../data/data.js';
+import { getTopics } from './data.js'; // Opravena cesta
 import { Topic, Level, Word } from './models.js';
 import { getCurrentUser } from './user.js';
 
@@ -147,7 +147,7 @@ export function loadTopics() {
 
     // Přidání klikací události na celý seznamový prvek
     listItem.addEventListener('click', () => {
-      window.location.href = `/levels.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}`;
+      window.location.href = `./levels.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}`;
     });
 
     topicList.appendChild(listItem);
@@ -172,9 +172,9 @@ export function loadLevels() {
     listItem.textContent = `Úroveň ${level.levelNumber}`;
     listItem.addEventListener('click', () => {
       if (mode === 'learning') {
-        window.location.href = `/learning.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}&level=${level.levelNumber}`;
+        window.location.href = `./learning.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}&level=${level.levelNumber}`;
       } else if (mode === 'testing') {
-        window.location.href = `/testing.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}&level=${level.levelNumber}`;
+        window.location.href = `./testing.html?mode=${mode}&topic=${encodeURIComponent(topic.name)}&level=${level.levelNumber}`;
       }
     });
     levelList.appendChild(listItem);
